@@ -33,8 +33,11 @@ class LookAlike
                     : Helper::getStaticPropertyNames($objectOrClass))
             as $propertyName
         ) {
-            $propertyValue = Helper::getPropertyValue($objectOrClass, $propertyName);
-            Helper::setPropertyValue($this->object, $propertyName, $propertyValue);
+            try {
+                $propertyValue = Helper::getPropertyValue($objectOrClass, $propertyName);
+                Helper::setPropertyValue($this->object, $propertyName, $propertyValue);
+            } catch (\ReflectionException $e) {
+            }
         }
 
         return $this;
