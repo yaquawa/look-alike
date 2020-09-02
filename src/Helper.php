@@ -2,6 +2,7 @@
 
 namespace Yaquawa\LookAlike;
 
+use ReflectionClass;
 use ReflectionProperty;
 
 class Helper
@@ -49,5 +50,63 @@ class Helper
         $reflectionProperty->setAccessible(true);
 
         return $reflectionProperty;
+    }
+
+    /**
+     * @param object|string $objectOrClass
+     * @return ReflectionProperty[]
+     * @throws \ReflectionException
+     */
+    public static function getObjectProperties($objectOrClass): array
+    {
+        return array_filter((new ReflectionClass($objectOrClass))->getProperties(), function (
+            ReflectionProperty $property
+        ) {
+            return !$property->isStatic();
+        });
+    }
+
+    /**
+     * @param object|string $objectOrClass
+     * @return ReflectionProperty[]
+     * @throws \ReflectionException
+     */
+    public static function getStaticProperties($objectOrClass): array
+    {
+        return (new ReflectionClass($objectOrClass))->getProperties(ReflectionProperty::IS_STATIC);
+    }
+
+    /**
+     * @param object|string $objectOrClass
+     * @return string[]
+     * @throws \ReflectionException
+     */
+    public static function getObjectPropertyNames($objectOrClass): array
+    {
+        return array_map(function (ReflectionProperty $property) {
+            return $property->getName();
+        }, static::getObjectProperties($objectOrClass));
+    }
+
+    /**
+     * @param object|string $objectOrClass
+     * @return string[]
+     */
+    public static function getStaticPropertyNames($objectOrClass): array
+    {
+        return static::getPropertyNames($objectOrClass, ReflectionProperty::IS_STATIC);
+    }
+
+    /**
+     * @param object|string $objectOrClass
+     * @param int|null $filter
+     * @return string[]
+     * @throws \ReflectionException
+     */
+    public static function getPropertyNames($objectOrClass, int $filter = null): array
+    {
+        return array_map(function (ReflectionProperty $property) {
+            return $property->getName();
+        }, (new ReflectionClass($objectOrClass))->getProperties($filter));
     }
 }

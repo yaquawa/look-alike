@@ -10,5 +10,5 @@ composer require yaquawa/look-alike
 use Yaquawa\LookAlike\LookAlike;
 
 $lookAlike = new LookAlike($targetObjectOrClass);
-$lookAlike->syncProperties(['property_1', 'property_2'], $objectOrClass);
+$lookAlike->syncProperties($objectOrClass, ['property_1', 'property_2']);
 ```

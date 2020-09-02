@@ -33,9 +33,15 @@ class HelperTest extends TestCase
     {
         $staticPrivateProperty = DummyClass::getStaticPrivateProperty();
 
-        $this->assertEquals($staticPrivateProperty, Helper::getPropertyValue(DummyClass::class, 'staticPrivateProperty'));
+        $this->assertEquals(
+            $staticPrivateProperty,
+            Helper::getPropertyValue(DummyClass::class, 'staticPrivateProperty')
+        );
 
-        $this->assertEquals($staticPrivateProperty, Helper::getPropertyValue(new DummyClass(), 'staticPrivateProperty'));
+        $this->assertEquals(
+            $staticPrivateProperty,
+            Helper::getPropertyValue(new DummyClass(), 'staticPrivateProperty')
+        );
     }
 
     /**
@@ -45,9 +51,15 @@ class HelperTest extends TestCase
     {
         $staticProtectedProperty = DummyClass::getStaticProtectedProperty();
 
-        $this->assertEquals($staticProtectedProperty, Helper::getPropertyValue(DummyClass::class, 'staticProtectedProperty'));
+        $this->assertEquals(
+            $staticProtectedProperty,
+            Helper::getPropertyValue(DummyClass::class, 'staticProtectedProperty')
+        );
 
-        $this->assertEquals($staticProtectedProperty, Helper::getPropertyValue(new DummyClass(), 'staticProtectedProperty'));
+        $this->assertEquals(
+            $staticProtectedProperty,
+            Helper::getPropertyValue(new DummyClass(), 'staticProtectedProperty')
+        );
     }
 
     /**
@@ -100,4 +112,3 @@ class HelperTest extends TestCase
         $this->assertEquals('foobar', $object->getProtectedProperty());
     }
 }
-
